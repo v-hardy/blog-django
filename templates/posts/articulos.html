@@ -1,16 +1,29 @@
 {% extends "base.html" %}
 
-{% block title %}Lista de artículos{% endblock %}
+{% block title %}Lista de artículos en Mi Blog{% endblock %}
 
 {% block content %}
-    <h1>Artículos recientes</h1>
     <ul>
         {% for articulo in articulos %}
             <li>
-                <a href="{% url 'articulo_detalle' articulo.pk %}">{{ articulo.titulo }}</a>
+                <a href="{% url 'articulo' articulo.pk %}" style="text-decoration: none; color: inherit; display: block;">
+                    <h2>{{ articulo.titulo }}</h2>
+                    <p><strong>Publicado:</strong> {{ articulo.fecha_publicacion }}</p>
+                    <p><strong>Autor:</strong> {{ articulo.autor.username }}</p>
+                    <p><strong>Categoría:</strong> {{ articulo.categoria.nombre_categoria }}</p>
+                    <div>
+                        {{ articulo.contenido|truncatewords:30 }}
+                    </div>
+                    {% if articulo.fotos.all %}
+                        <div>
+                        <strong>Fotos:</strong>
+                        {% for foto in articulo.fotos.all %}
+                            <img src="{{ foto.url_foto }}" alt="{{ foto.descripcion }}" width="200">
+                        {% endfor %}
+                        </div>
+                    {% endif %}
+                </a>
             </li>
-        {% empty %}
-            <li>No hay artículos todavía.</li>
         {% endfor %}
     </ul>
 {% endblock %}

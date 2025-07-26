@@ -16,9 +16,9 @@ def detallar_categoria(request, id):
     })
 
 
-def inicio(request):
+def destacar_articulos(request):
     ultimos_articulos = Articulo.objects.select_related('autor', 'categoria').prefetch_related('fotos').order_by('-fecha_publicacion')[:10]
-    return render(request, 'posts/inicio.html', {'articulos': ultimos_articulos})
+    return render(request, 'posts/articulos_destacados.html', {'articulos': ultimos_articulos})
 
 def listar_articulos(request):
     articulos = Articulo.objects.all().order_by('-fecha_publicacion')
