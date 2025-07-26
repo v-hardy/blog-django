@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Buscar artículos</h2>
+
+        <form method="get">
+            <label for="id_categoria">Categoría:</label>
+            {{ form.categoria }}
+
+            <label for="id_orden_fecha">Antigüedad:</label>
+            {{ form.orden_fecha }}
+
+            <label for="id_orden_alfabetico">Orden alfabético:</label>
+            {{ form.orden_alfabetico }}
+
+            <button type="submit">Buscar</button>
+        </form>
+
+    <h3>Resultados:</h3>
+    <ul>
+        {% for articulo in articulos %}
+            <li>
+                <strong>{{ articulo.titulo }}</strong> |
+                Categoría: {{ articulo.categoria.nombre }} |
+                Publicado el {{ articulo.fecha_publicacion|date:"d/m/Y H:i" }}
+            </li>
+        {% empty %}
+            <li>No se encontraron artículos.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
