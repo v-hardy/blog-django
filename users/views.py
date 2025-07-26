@@ -1,7 +1,7 @@
-# views.py
-from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import login
 from django.shortcuts import render, redirect
+from django.contrib.auth import login
+from django.contrib.auth.forms import AuthenticationForm
+from .forms import RegistroUsuarioForm
 
 def login_view(request):
     if request.method == 'POST':
@@ -13,3 +13,13 @@ def login_view(request):
     else:
         form = AuthenticationForm()
     return render(request, 'users/login.html', {'form': form})
+
+def register_view(request):
+    if request.method == 'POST':
+        form = RegistroUsuarioForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login')  # Asegurate de tener definida la vista 'login'
+    else:
+        form = RegistroUsuarioForm()
+    return render(request, 'users/register.html', {'form': form})
