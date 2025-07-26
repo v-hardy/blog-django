@@ -8,7 +8,7 @@
         <ul class="list-group mt-3">
             {% for articulo in articulos %}
                 <li class="list-group-item">
-                    <a href="{% url 'detalle_articulo' articulo.id %}">
+                    <a href="{% url 'articulo' articulo.id %}">
                         {{ articulo.titulo }}
                     </a>
                     <br>

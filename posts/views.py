@@ -7,10 +7,10 @@ def categorias(request):
     categorias = Categoria.objects.all()
     return render(request, 'posts/categorias.html', {'categorias': categorias})
 
-def categoria_detalle(request, id):
+def detallar_categoria(request, id):
     categoria = get_object_or_404(Categoria, id=id)
     articulos = Articulo.objects.filter(categoria=categoria).order_by('-fecha_publicacion')
-    return render(request, 'posts/categoria_detalle.html', {
+    return render(request, 'posts/categoria.html', {
         'categoria': categoria,
         'articulos': articulos
     })
@@ -20,13 +20,13 @@ def inicio(request):
     ultimos_articulos = Articulo.objects.select_related('autor', 'categoria').prefetch_related('fotos').order_by('-fecha_publicacion')[:10]
     return render(request, 'posts/inicio.html', {'articulos': ultimos_articulos})
 
-def lista_articulos(request):
+def listar_articulos(request):
     articulos = Articulo.objects.all().order_by('-fecha_publicacion')
-    return render(request, 'posts/lista_articulos.html', {'articulos': articulos})
+    return render(request, 'posts/articulos.html', {'articulos': articulos})
 
-def detalle_articulo(request, pk):  # 👈 aquí agregas el argumento pk
+def detallar_articulo(request, pk):  # 👈 aquí agregas el argumento pk
     articulo = get_object_or_404(Articulo, pk=pk)
-    return render(request, 'posts/detalle_articulo.html', {'articulo': articulo})
+    return render(request, 'posts/articulo.html', {'articulo': articulo})
 
 def buscar_articulos(request):
     form = BusquedaPostForm(request.GET or None)

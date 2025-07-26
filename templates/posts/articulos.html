@@ -7,7 +7,7 @@
     <ul>
         {% for articulo in articulos %}
             <li>
-                <a href="{% url 'detalle_articulo' articulo.pk %}">{{ articulo.titulo }}</a>
+                <a href="{% url 'articulo_detalle' articulo.pk %}">{{ articulo.titulo }}</a>
             </li>
         {% empty %}
             <li>No hay artículos todavía.</li>

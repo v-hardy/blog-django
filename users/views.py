@@ -9,7 +9,7 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            return redirect('lista_articulos')  # o la página que quieras
+            return redirect('articulos')  # o la página que quieras
     else:
         form = AuthenticationForm()
     return render(request, 'users/login.html', {'form': form})
