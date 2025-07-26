@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Artículos en "{{ categoria.nombre_categoria }}"</h2>
+
+    {% if articulos %}
+        <ul class="list-group mt-3">
+            {% for articulo in articulos %}
+                <li class="list-group-item">
+                    <a href="{% url 'detalle_articulo' articulo.id %}">
+                        {{ articulo.titulo }}
+                    </a>
+                    <br>
+                    <small class="text-muted">Publicado el {{ articulo.fecha_publicacion|date:"d M Y" }}</small>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No hay artículos en esta categoría todavía.</p>
+    {% endif %}
+</div>
+{% endblock %}

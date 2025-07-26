@@ -11,30 +11,63 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
         <div class="container-fluid">
             <a class="navbar-brand" href="/">Mi Blog</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                    aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
+                <ul class="navbar-nav me-auto">
+
+                    <!-- Inicio -->
                     <li class="nav-item">
-                        {% if user.is_authenticated %}
-                            <form action="{% url 'logout' %}" method="post" style="display:inline;">
+                        <a class="nav-link" href="{% url 'inicio' %}">Inicio</a>
+                    </li>
+
+                    <!-- Categorías -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'categorias' %}">Categorías</a>
+                    </li>
+
+                    <!-- Artículos -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'articulos' %}">Artículos</a>
+                    </li>
+
+                    <!-- Buscador -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'buscar_articulos' %}">Buscador</a>
+                    </li>
+
+                    <!-- Acerca de -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'acerca_de' %}">Acerca de</a>
+                    </li>
+
+                    <!-- Contacto -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'contacto' %}">Contacto</a>
+                    </li>
+                </ul>
+
+                <!-- Autenticación -->
+                <ul class="navbar-nav ms-auto">
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <form action="{% url 'logout' %}" method="post" class="d-inline">
                                 {% csrf_token %}
-                                <button type="submit">Cerrar sesión</button>
+                                <button class="btn btn-outline-light btn-sm" type="submit">Cerrar sesión</button>
                             </form>
-                        {% else %}
-                            <a href="{% url 'login' %}">Iniciar sesión</a>
-                            <a href="{% url 'register' %}">Registrar</a>
-                        {% endif %}
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/posts/">Artículos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/search/">Buscador</a>
-                    </li>
-                    <!-- Agrega más enlaces según tu app -->
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'login' %}">Iniciar sesión</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'registro' %}">Registrar</a>
+                        </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>

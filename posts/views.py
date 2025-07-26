@@ -1,6 +1,24 @@
 from django.shortcuts import get_object_or_404, render
-from .models import Articulo
+from .models import Articulo, Categoria
 from .forms import BusquedaPostForm
+
+
+def categorias(request):
+    categorias = Categoria.objects.all()
+    return render(request, 'posts/categorias.html', {'categorias': categorias})
+
+def categoria_detalle(request, id):
+    categoria = get_object_or_404(Categoria, id=id)
+    articulos = Articulo.objects.filter(categoria=categoria).order_by('-fecha_publicacion')
+    return render(request, 'posts/categoria_detalle.html', {
+        'categoria': categoria,
+        'articulos': articulos
+    })
+
+
+def inicio(request):
+    ultimos_articulos = Articulo.objects.select_related('autor', 'categoria').prefetch_related('fotos').order_by('-fecha_publicacion')[:10]
+    return render(request, 'posts/inicio.html', {'articulos': ultimos_articulos})
 
 def lista_articulos(request):
     articulos = Articulo.objects.all().order_by('-fecha_publicacion')

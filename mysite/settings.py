@@ -49,6 +49,8 @@ INSTALLED_APPS = [
     'users',
     'posts',
     'comments',
+    'about',
+    'contact',
 ]
 
 MIDDLEWARE = [
@@ -63,6 +65,8 @@ MIDDLEWARE = [
 
 # 👇 Personalización del modelo de usuario
 AUTH_USER_MODEL = 'users.Usuario'
+#LOGIN_REDIRECT_URL = '/'     # Adonde redirige después de iniciar sesión
+#LOGOUT_REDIRECT_URL = '/'    # O donde prefieras
 
 
 ROOT_URLCONF = 'mysite.urls'
