@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>Iniciar sesión</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    <div>
+      {{ form.username.label_tag }} {{ form.username }}
+    </div>
+    <div>
+      {{ form.password.label_tag }} {{ form.password }}
+    </div>
+    <button type="submit">Ingresar</button>
+  </form>
+{% endblock %}

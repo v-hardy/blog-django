@@ -1,3 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponse
 
-# Create your views here.
+def lista_articulos(request):
+    return HttpResponse("hola")
+    #return render(request, 'comments/lista_articulos.html', context)
+
