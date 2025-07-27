@@ -1,0 +1,20 @@
+{% if articulo.fotos.all %}
+    <h3>Fotos</h3>
+    <ul>
+        {% for foto in articulo.fotos.all %}
+            <li>
+                <img src="{{ foto.imagen.url }}" alt="{{ foto.descripcion }}" width="200">
+                <p>{{ foto.descripcion }}</p>
+
+                {% if user.is_staff %}
+                    <a href="{% url 'editar_foto' foto.pk %}">Editar</a> |
+                    <a href="{% url 'eliminar_foto' foto.pk %}">Eliminar</a>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+{% if user.is_staff %}
+    <a href="{% url 'subir_foto' articulo.pk %}">Subir nueva foto</a>
+{% endif %}

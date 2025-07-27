@@ -22,9 +22,11 @@
     <ul>
         {% for articulo in articulos %}
             <li>
+                <a href="{% url 'articulo' articulo.pk %}" style="text-decoration: none; color: inherit; display: block;">
                 <strong>{{ articulo.titulo }}</strong> |
                 Categoría: {{ articulo.categoria }} |
                 Publicado el {{ articulo.fecha_publicacion|date:"d/m/Y H:i" }}
+                </a>
             </li>
         {% empty %}
             <li>No se encontraron artículos.</li>

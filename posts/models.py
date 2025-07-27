@@ -19,9 +19,10 @@ class Articulo(models.Model):
         return self.titulo
 
 class Foto(models.Model):
-    url_foto = models.URLField()
+    imagen = models.ImageField(upload_to='fotos/', null=True, blank=True)  #📌 upload_to='fotos/' guardará las imágenes en MEDIA_ROOT/fotos/.
     descripcion = models.TextField(blank=True)
     articulo = models.ForeignKey(Articulo, on_delete=models.CASCADE, related_name='fotos')
 
     def __str__(self):
         return f"Foto de {self.articulo.titulo}"
+

@@ -1,5 +1,11 @@
 from django import forms
-from .models import Categoria, Articulo
+from .models import Categoria, Articulo, Foto
+
+class FotoForm(forms.ModelForm):
+    class Meta:
+        model = Foto
+        fields = ['imagen', 'descripcion']
+
 
 class ArticuloForm(forms.ModelForm):
     class Meta:

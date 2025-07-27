@@ -2,10 +2,52 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse_lazy
-from .models import Articulo, Categoria
-from .forms import BusquedaPostForm, ArticuloForm
+from .models import Articulo, Categoria, Foto
+from .forms import BusquedaPostForm, ArticuloForm, FotoForm
 from comments.forms import ComentarioForm
 from comments.models import Comentario
+
+
+# Crear foto (asociada a un artículo)
+class SubirFoto(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+    model = Foto
+    form_class = FotoForm
+    template_name = 'posts/foto_form.html'
+
+    def form_valid(self, form):
+        articulo_id = self.kwargs['articulo_id']
+        form.instance.articulo_id = articulo_id
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('articulo', kwargs={'pk': self.object.articulo.pk})
+
+    def test_func(self):
+        return self.request.user.is_staff
+
+# Editar foto
+class EditarFoto(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Foto
+    form_class = FotoForm
+    template_name = 'posts/foto_form.html'
+
+    def get_success_url(self):
+        return reverse_lazy('articulo', kwargs={'pk': self.object.articulo.pk})
+
+    def test_func(self):
+        return self.request.user.is_staff
+
+# Eliminar foto
+class EliminarFoto(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Foto
+    template_name = 'posts/foto_confirm_delete.html'
+
+    def get_success_url(self):
+        return reverse_lazy('articulo', kwargs={'pk': self.object.articulo.pk})
+
+    def test_func(self):
+        return self.request.user.is_staff
+
 
 
 def categorias(request):

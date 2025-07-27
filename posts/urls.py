@@ -15,5 +15,10 @@ urlpatterns = [
     path('alls', views.listar_articulos, name='articulos'),
     path('<int:pk>/', views.detallar_articulo, name='articulo'),
 
+    # URLs de fotos dentro de posts
+    path('articulo/<int:articulo_id>/foto/nueva/', views.SubirFoto.as_view(), name='subir_foto'),
+    path('foto/<int:pk>/editar/', views.EditarFoto.as_view(), name='editar_foto'),
+    path('foto/<int:pk>/eliminar/', views.EliminarFoto.as_view(), name='eliminar_foto'),
+
     path('search/', views.buscar_articulos, name='buscar_articulos'),
 ]

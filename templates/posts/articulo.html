@@ -13,5 +13,7 @@
         <a href="{% url 'eliminar_articulo' articulo.pk %}">Eliminar</a>
     {% endif %}
 
+    {% include 'posts/fotos.html' %}
+
     {% include 'comments/comentarios.html' %}
 {% endblock %}

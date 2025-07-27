@@ -14,14 +14,9 @@
                     <div>
                         {{ articulo.contenido|truncatewords:30 }}
                     </div>
-                    {% if articulo.fotos.all %}
-                        <div>
-                        <strong>Fotos:</strong>
-                        {% for foto in articulo.fotos.all %}
-                            <img src="{{ foto.url_foto }}" alt="{{ foto.descripcion }}" width="200">
-                        {% endfor %}
-                        </div>
-                    {% endif %}
+
+                    {% include 'posts/fotos.html' %}
+
                 </a>
             </li>
         {% endfor %}
