@@ -1,6 +1,12 @@
-<h1>{{ view.object.pk|yesno:"Editar Artículo,Nuevo Artículo" }}</h1>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Guardar</button>
-</form>
+{% extends "base.html" %}
+
+{% block title %}{{ view.object.pk|yesno:"Editar Artículo,Nuevo Artículo" }} en Mi Blog{% endblock %}
+
+{% block content %}
+  <h1>{{ view.object.pk|yesno:"Editar Artículo,Nuevo Artículo" }}</h1>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Guardar</button>
+  </form>
+{% endblock %}

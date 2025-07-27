@@ -9,9 +9,9 @@ urlpatterns = [
     path('categories/', views.categorias, name='categorias'),
     path('categories/<int:id>/', views.detallar_categoria, name='categoria'),
     
-    path('nuevo', views.CrearArticulo.as_view(), name='crear'),
-    path('<int:pk>/editar', views.EditarArticulo.as_view(), name='editar'),
-    path('<int:pk>/eliminar', views.EliminarArticulo.as_view(), name='eliminar'),
+    path('nuevo', views.CrearArticulo.as_view(), name='crear_articulo'),
+    path('<int:pk>/editar', views.EditarArticulo.as_view(), name='editar_articulo'),
+    path('<int:pk>/eliminar', views.EliminarArticulo.as_view(), name='eliminar_articulo'),
     path('alls', views.listar_articulos, name='articulos'),
     path('<int:pk>/', views.detallar_articulo, name='articulo'),
 

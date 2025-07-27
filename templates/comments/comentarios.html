@@ -1,25 +1,30 @@
-{% extends "base.html" %}
-
 {% block content %}
   <h2>Comentarios</h2>
+    {% for comentario in comentarios %}
+        <p>
+            <strong>{{ comentario.usuario.username }}</strong>: {{ comentario.contenido }}
+            {% if user == comentario.usuario or user.is_staff or user.is_superuser %}
+                <!-- Botón Editar -->
+                <a href="{% url 'editar_comentario' comentario.pk %}">Editar</a>
 
-  {% if comments %}
-    <ul>
-      {% for comment in comments %}
-        <li>
-          <strong>{{ comment.autor }}</strong> - {{ comment.fecha|date:"d M Y H:i" }}<br>
-          {{ comment.texto }}
-        </li>
-      {% endfor %}
-    </ul>
-  {% else %}
-    <p>No hay comentarios todavía.</p>
-  {% endif %}
+                <!-- Botón Eliminar (con confirmación) -->
+                <form action="{% url 'eliminar_comentario' comentario.pk %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" onclick="return confirm('¿Estás seguro de que deseas eliminar este comentario?');">Eliminar</button>
+                </form>
+            {% endif %}
+        </p>
+    {% empty %}
+        <p>No hay comentarios aún.</p>
+    {% endfor %}
 
-  <h3>Agregar un nuevo comentario</h3>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Enviar</button>
-  </form>
+    {% if user.is_authenticated %}
+        <form action="{% url 'crear_comentario' articulo.pk %}" method="post">
+            {% csrf_token %}
+            {{ comentario_form.as_p }}
+            <button type="submit">Comentar</button>
+        </form>
+    {% else %}
+        <p><a href="{% url 'login' %}">Inicia sesión</a> para comentar.</p>
+    {% endif %}
 {% endblock %}

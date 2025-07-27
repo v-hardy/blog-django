@@ -25,7 +25,7 @@ class CrearArticulo(CreateView):
     model = Articulo
     form_class = ArticuloForm
     template_name = 'posts/articulo_form.html'
-    success_url = reverse_lazy('articulos:listar')
+    success_url = reverse_lazy('articulos')
 
     def form_valid(self, form):
         form.instance.autor = self.request.user
@@ -39,16 +39,16 @@ class EditarArticulo(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     def test_func(self):
         articulo = self.get_object()
-        return self.request.user == articulo.autor
+        return self.request.user == articulo.autor or self.request.user.is_staff
 
 class EliminarArticulo(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Articulo
     template_name = 'posts/articulo_confirm_delete.html'
-    success_url = reverse_lazy('articulos:listar')
+    success_url = reverse_lazy('articulos')
 
     def test_func(self):
         articulo = self.get_object()
-        return self.request.user == articulo.autor
+        return self.request.user == articulo.autor or self.request.user.is_staff
 
 
 def destacar_articulos(request):

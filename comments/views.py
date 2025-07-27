@@ -15,7 +15,7 @@ class ComentarioCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse_lazy('posts/<int:pk>/', kwargs={'pk': self.object.pk})
+        return reverse_lazy('articulo', kwargs={'pk': self.object.articulo.pk})
 
 class ComentarioUpdateView(LoginRequiredMixin, UpdateView):
     model = Comentario
@@ -23,11 +23,11 @@ class ComentarioUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'comments/comentario_form.html'
 
     def get_success_url(self):
-        return reverse('detalle', kwargs={'pk': self.object.articulo.pk})
+        return reverse('articulo', kwargs={'pk': self.object.articulo.pk})
 
 class ComentarioDeleteView(LoginRequiredMixin, DeleteView):
     model = Comentario
     template_name = 'comments/comentario_borrar.html'
 
     def get_success_url(self):
-        return reverse('posts/<int:pk>/', kwargs={'pk': self.object.articulo.pk})
+        return reverse('articulo', kwargs={'pk': self.object.articulo.pk})

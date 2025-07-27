@@ -8,26 +8,10 @@
     <p>Autor: {{ articulo.autor.username }}</p>
     <p><em>{{ articulo.fecha_publicacion }}</em></p>
 
-    {% if user == articulo.autor %}
-        <a href="{% url 'editar' articulo.pk %}">Editar</a> |
-        <a href="{% url 'eliminar' articulo.pk %}">Eliminar</a>
+    {% if user == articulo.autor or user.is_staff or user.is_superuser %}
+        <a href="{% url 'editar_articulo' articulo.pk %}">Editar</a> |
+        <a href="{% url 'eliminar_articulo' articulo.pk %}">Eliminar</a>
     {% endif %}
 
-    <h2>Comentarios</h2>
-
-    {% for comentario in comentarios %}
-        <p><strong>{{ comentario.usuario.username }}</strong>: {{ comentario.contenido }}</p>
-    {% empty %}
-        <p>No hay comentarios aún.</p>
-    {% endfor %}
-
-    {% if user.is_authenticated %}
-        <form action="{% url 'crear_comentario' articulo.pk %}" method="post">
-            {% csrf_token %}
-            {{ comentario_form.as_p }}
-            <button type="submit">Comentar</button>
-        </form>
-    {% else %}
-        <p><a href="{% url 'login' %}">Inicia sesión</a> para comentar.</p>
-    {% endif %}
+    {% include 'comments/comentarios.html' %}
 {% endblock %}
