@@ -1,6 +1,8 @@
 from django.urls import path
-from . import views  # importa tus vistas si es necesario
+from .views import ComentarioCreateView, ComentarioUpdateView, ComentarioDeleteView
 
 urlpatterns = [
-    path('', views.lista_articulos, name='lista_articulosNO'),
+    path('new/<int:articulo_id>', ComentarioCreateView.as_view(), name='crear_comentario'),
+    path('<int:pk>/editar/', ComentarioUpdateView.as_view(), name='editar_comentario'),
+    path('<int:pk>/eliminar/', ComentarioDeleteView.as_view(), name='eliminar_comentario'),
 ]

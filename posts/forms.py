@@ -1,5 +1,10 @@
 from django import forms
-from .models import Categoria
+from .models import Categoria, Articulo
+
+class ArticuloForm(forms.ModelForm):
+    class Meta:
+        model = Articulo
+        fields = ['titulo', 'contenido', 'categoria']
 
 class BusquedaPostForm(forms.Form):
     categoria = forms.ModelChoiceField(

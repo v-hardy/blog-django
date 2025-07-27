@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>Comentarios</h2>
+
+  {% if comments %}
+    <ul>
+      {% for comment in comments %}
+        <li>
+          <strong>{{ comment.autor }}</strong> - {{ comment.fecha|date:"d M Y H:i" }}<br>
+          {{ comment.texto }}
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No hay comentarios todavía.</p>
+  {% endif %}
+
+  <h3>Agregar un nuevo comentario</h3>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Enviar</button>
+  </form>
+{% endblock %}

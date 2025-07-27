@@ -22,7 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('posts.urls')), #como es un blog el inicio es los posts pero habria que poner los recientes o destacados
     path('posts/', include('posts.urls')),
-    path('comemnts/', include('comments.urls')),
+    path('comments/', include('comments.urls')),
     path('users/', include('users.urls')),
     path('contact/', include('contact.urls')),  # mejora modular
     path('about/', include('about.urls')),      # mejora modular

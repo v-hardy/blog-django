@@ -1,6 +1,11 @@
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
 from django.shortcuts import get_object_or_404, render
+from django.urls import reverse_lazy
 from .models import Articulo, Categoria
-from .forms import BusquedaPostForm
+from .forms import BusquedaPostForm, ArticuloForm
+from comments.forms import ComentarioForm
+from comments.models import Comentario
 
 
 def categorias(request):
@@ -16,6 +21,36 @@ def detallar_categoria(request, id):
     })
 
 
+class CrearArticulo(CreateView):
+    model = Articulo
+    form_class = ArticuloForm
+    template_name = 'posts/articulo_form.html'
+    success_url = reverse_lazy('articulos:listar')
+
+    def form_valid(self, form):
+        form.instance.autor = self.request.user
+        return super().form_valid(form)
+
+class EditarArticulo(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Articulo
+    form_class = ArticuloForm
+    template_name = 'posts/articulo_form.html'
+    success_url = reverse_lazy('articulos')
+
+    def test_func(self):
+        articulo = self.get_object()
+        return self.request.user == articulo.autor
+
+class EliminarArticulo(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Articulo
+    template_name = 'posts/articulo_confirm_delete.html'
+    success_url = reverse_lazy('articulos:listar')
+
+    def test_func(self):
+        articulo = self.get_object()
+        return self.request.user == articulo.autor
+
+
 def destacar_articulos(request):
     ultimos_articulos = Articulo.objects.select_related('autor', 'categoria').prefetch_related('fotos').order_by('-fecha_publicacion')[:10]
     return render(request, 'posts/articulos_destacados.html', {'articulos': ultimos_articulos})
@@ -26,7 +61,14 @@ def listar_articulos(request):
 
 def detallar_articulo(request, pk):  # 👈 aquí agregas el argumento pk
     articulo = get_object_or_404(Articulo, pk=pk)
-    return render(request, 'posts/articulo.html', {'articulo': articulo})
+    comentarios = articulo.comentario_set.select_related('usuario').all()
+    form = ComentarioForm()
+
+    return render(request, 'posts/articulo.html', {
+        'articulo': articulo,
+        'comentarios': comentarios,
+        'comentario_form': form
+    })
 
 def buscar_articulos(request):
     form = BusquedaPostForm(request.GET or None)
