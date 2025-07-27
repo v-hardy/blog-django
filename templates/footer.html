@@ -1,0 +1,22 @@
+<footer style="background-color: #f8f9fa; padding: 2rem 0; border-top: 1px solid #dee2e6; margin-top: 3rem;">
+  <div style="max-width: 1000px; margin: auto; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;">
+    
+    <!-- Info del Blog -->
+    <div style="flex: 1 1 300px;">
+      <h4 style="margin-bottom: 0.5rem;">Mi Blog</h4>
+      <p style="margin: 0;">Reflexiones, artículos y tutoriales sobre desarrollo web y tecnología.</p>
+    </div>
+
+    <!-- Enlaces útiles -->
+    <div style="flex: 1 1 200px; text-align: right;">
+      <a href="{% url 'destacados' %}" style="margin-right: 15px; text-decoration: none; color: #007bff;">Inicio</a>
+      <a href="{% url 'acerca_de' %}" style="margin-right: 15px; text-decoration: none; color: #007bff;">Acerca de</a>
+      <a href="{% url 'contacto' %}" style="text-decoration: none; color: #007bff;">Contacto</a>
+    </div>
+
+  </div>
+
+  <div style="text-align: center; margin-top: 1.5rem; color: #6c757d;">
+    <small>&copy; {{ now|date:"Y" }} Mi Blog. Todos los derechos reservados.</small>
+  </div>
+</footer>

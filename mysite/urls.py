@@ -26,8 +26,8 @@ urlpatterns = [
     path('posts/', include('posts.urls')),
     path('comments/', include('comments.urls')),
     path('users/', include('users.urls')),
-    path('contact/', include('contact.urls')),  # mejora modular
-    path('about/', include('about.urls')),      # mejora modular
+    path('contact/', include('contact.urls'), name="contacto"),  # mejora modular
+    path('about/', include('about.urls'), name="acerca_de"),      # mejora modular
 ]
 
 if settings.DEBUG:

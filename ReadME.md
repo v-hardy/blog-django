@@ -2,6 +2,7 @@
 
 Este proyecto es una plataforma web tipo **blog**, desarrollada con el framework **Django**. Su objetivo es ofrecer una solución completa y escalable para la publicación, gestión y exploración de artículos, incorporando distintos niveles de permisos mediante roles de usuario.
 
+
 ---
 
 ## 🧑‍💻 Tecnologías Utilizadas
@@ -10,6 +11,7 @@ Este proyecto es una plataforma web tipo **blog**, desarrollada con el framework
 - **Jinja / Django Templates** (sistema de plantillas HTML)
 - **HTML5** (estructura del frontend)
 - **SQLite3** (base de datos por defecto en Django)
+
 
 ---
 
@@ -36,6 +38,7 @@ Incluye todos los permisos anteriores, más:
 - Categorizar artículos.
 - Editar o eliminar comentarios de otros usuarios.
 
+
 ---
 
 ## 🧱 Estructura del Sitio
@@ -55,21 +58,22 @@ Incluye todos los permisos anteriores, más:
   - Dirección de correo.
   - Enlaces a redes sociales.
 
+
 ---
 
 ## 🔧 Funcionalidades Implementadas
 
 ### 📄 Artículos
-- ✅ Crear
-- ✅ Leer
-- ✅ Editar
-- ✅ Eliminar
+- Crear
+- Leer
+- Editar
+- Eliminar
 
 ### 💬 Comentarios
-- ✅ Crear
-- ✅ Leer
-- ✅ Editar
-- ✅ Eliminar
+- Crear
+- Leer
+- Editar
+- Eliminar
 
 ### 🔍 Filtros de búsqueda
 - Por categoría
@@ -80,6 +84,7 @@ Incluye todos los permisos anteriores, más:
 - Registro de nuevos usuarios
 - Login / Logout
 - Asignación de roles por permisos
+
 
 ---
 
@@ -118,6 +123,7 @@ python manage.py runserver
 ```
 Accede en tu navegador a: http://localhost:8000
 
+
 ---
 
 ## 🤝 Contribuciones
@@ -125,14 +131,12 @@ Accede en tu navegador a: http://localhost:8000
 ¡Contribuciones son bienvenidas!
 Puedes abrir un issue para reportar bugs o sugerencias, o enviar un pull request para proponer mejoras.
 
-## 📄 Licencia
 
-Este proyecto está licenciado bajo la MIT License, salvo que se especifique otra.
-
+---
 
 ## ✉️ Contacto
 
-Si deseas saber más o ponerte en contacto con el equipo detrás del proyecto, visita la sección Contacto dentro de la aplicación o escribe a: victor.hardy@hotmail.com
+Si deseas saber más o ponerte en contacto con el equipo detrás del proyecto, escribe a: victor.hardy@hotmail.com
 
 
 ---
