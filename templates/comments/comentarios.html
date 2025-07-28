@@ -3,58 +3,75 @@
 {% block content %}
 <div class="mt-5">
     <h3 class="mb-4">🗨️ Comentarios</h3>
-
     {% for comentario in comentarios %}
-        <div class="border rounded p-3 mb-3 bg-light">
-            <div class="d-flex justify-content-between">
-                <div>
-                    <strong>{{ comentario.usuario.username }}</strong>
-                    <span class="text-muted small ms-2">
-                        {{ comentario.fecha_creacion|date:"d M Y H:i" }}
-                    </span>
-                </div>
-                {% if user == comentario.usuario or user.is_staff or user.is_superuser %}
-                    <div>
-                        <a href="{% url 'editar_comentario' comentario.pk %}" class="btn btn-sm btn-outline-secondary me-1">
-                            <i class="bi bi-pencil-fill"></i> Editar
-                        </a>
-                        <form action="{% url 'eliminar_comentario' comentario.pk %}" method="post" class="d-inline">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-sm btn-outline-danger"
-                                    onclick="return confirm('¿Estás seguro de que deseas eliminar este comentario?');">
-                                <i class="bi bi-trash-fill"></i> Eliminar
-                            </button>
-                        </form>
-                    </div>
-                {% endif %}
-            </div>
+        <div class="border rounded p-3 mb-3 bg-light" id="comentario-{{ comentario.pk }}">
+            <strong>{{ comentario.usuario.username }}</strong>
 
-            <p class="mt-2 mb-0">{{ comentario.contenido }}</p>
+            <!-- Texto original -->
+            <p id="texto-comentario-{{ comentario.pk }}">{{ comentario.contenido }}</p>
+
+            {% if user == comentario.usuario or user.is_staff or user.is_superuser %}
+                <!-- Formulario de edición oculto -->
+                <form method="post" action="" class="mb-3 d-none" id="form-editar-{{ comentario.pk }}">
+                    {% csrf_token %}
+                    <input type="hidden" name="comentario_id" value="{{ comentario.pk }}">
+                    <textarea name="contenido" class="form-control mb-2" rows="3" id="textarea-{{ comentario.pk }}"></textarea>
+                    <button type="submit" class="btn btn-sm btn-success">Guardar</button>
+                    <button type="button" class="btn btn-sm btn-secondary" onclick="cancelarEdicion(`{{ comentario.pk }}`)">Cancelar</button>
+                </form>
+
+                <div class="d-flex align-items-center gap-2 mt-2">
+
+                    <!-- Botón Editar -->
+                    <button class="btn btn-sm btn-outline-warning"
+                            onclick="mostrarFormulario(`{{ comentario.pk }}`, `{{ comentario.contenido|escapejs }}`)">
+                        <i class="bi bi-pencil-fill"></i> Editar
+                    </button>
+
+                    <!-- Botón Eliminar -->
+                    <form action="{% url 'eliminar_comentario' comentario.pk %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-outline-danger"
+                                onclick="return confirm('¿Estás seguro de que deseas eliminar este comentario?');">
+                            <i class="bi bi-trash"></i> Eliminar
+                        </button>
+                    </form>
+
+                </div>
+            {% endif %}
         </div>
     {% empty %}
-        <p class="text-muted">No hay comentarios aún.</p>
+        <p>No hay comentarios aún.</p>
     {% endfor %}
 
+    <!-- Formulario para nuevo comentario -->
     {% if user.is_authenticated %}
-        <div class="card mt-4">
-            <div class="card-body">
-                <h5 class="card-title">Añadir un comentario</h5>
-                <form action="{% url 'crear_comentario' articulo.pk %}" method="post">
-                    {% csrf_token %}
-                    <div class="mb-3">
-                        {{ comentario_form.contenido.label_tag }}
-                        {{ comentario_form.contenido|add_class:"form-control" }}
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-sm">
-                        <i class="bi bi-send"></i> Comentar
-                    </button>
-                </form>
-            </div>
-        </div>
+        <h4>Nuevo comentario</h4>
+        <form method="post" action="">
+            {% csrf_token %}
+            {{ comentario_form.contenido.label_tag }}
+            {{ comentario_form.contenido|add_class:"form-control mb-2" }}
+            <button type="submit" class="btn btn-primary btn-sm">Comentar</button>
+        </form>
     {% else %}
-        <p class="mt-4">
-            <a href="{% url 'login' %}">Inicia sesión</a> para comentar.
-        </p>
+        <p><a href="{% url 'login' %}">Inicia sesión</a> para comentar.</p>
     {% endif %}
+
+    <script>
+    function mostrarFormulario(id, contenido) {
+        // Rellenar el textarea con el contenido del comentario
+        document.getElementById('textarea-' + id).value = contenido;
+
+        // Ocultar el texto y mostrar el form
+        document.getElementById('texto-comentario-' + id).classList.add('d-none');
+        document.getElementById('form-editar-' + id).classList.remove('d-none');
+    }
+
+    function cancelarEdicion(id) {
+        document.getElementById('form-editar-' + id).classList.add('d-none');
+        document.getElementById('texto-comentario-' + id).classList.remove('d-none');
+    }
+    </script>
+
 </div>
 {% endblock %}

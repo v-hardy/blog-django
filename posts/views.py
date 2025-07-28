@@ -1,6 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse_lazy
 from .models import Articulo, Categoria, Foto
 from .forms import BusquedaPostForm, ArticuloForm, FotoForm
@@ -101,15 +101,35 @@ def listar_articulos(request):
     articulos = Articulo.objects.all().order_by('-fecha_publicacion')
     return render(request, 'posts/articulos.html', {'articulos': articulos})
 
-def detallar_articulo(request, pk):  # 👈 aquí agregas el argumento pk
+def detallar_articulo(request, pk):
     articulo = get_object_or_404(Articulo, pk=pk)
-    comentarios = articulo.comentario_set.select_related('usuario').all()
-    form = ComentarioForm()
+    comentarios = articulo.comentarios.all().order_by('-fecha_comentario')
+
+    if request.method == 'POST':
+        comentario_id = request.POST.get('comentario_id')
+        if comentario_id:
+            comentario = get_object_or_404(Comentario, pk=comentario_id)
+            if request.user == comentario.usuario or request.user.is_staff or request.user.is_superuser:
+                form = ComentarioForm(request.POST, instance=comentario)
+            else:
+                return redirect('articulo', pk=pk)
+        else:
+            form = ComentarioForm(request.POST)
+
+        if form.is_valid():
+            nuevo_comentario = form.save(commit=False)
+            nuevo_comentario.articulo = articulo
+            nuevo_comentario.usuario = request.user
+            nuevo_comentario.save()
+            return redirect('articulo', pk=pk)
+
+    else:
+        form = ComentarioForm()
 
     return render(request, 'posts/articulo.html', {
         'articulo': articulo,
         'comentarios': comentarios,
-        'comentario_form': form
+        'comentario_form': form,
     })
 
 def buscar_articulos(request):
