@@ -1,22 +1,37 @@
-<footer style="background-color: #f8f9fa; padding: 2rem 0; border-top: 1px solid #dee2e6; margin-top: 3rem;">
-  <div style="max-width: 1000px; margin: auto; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;">
-    
-    <!-- Info del Blog -->
-    <div style="flex: 1 1 300px;">
-      <h4 style="margin-bottom: 0.5rem;">Mi Blog</h4>
-      <p style="margin: 0;">Reflexiones, artículos y tutoriales sobre desarrollo web y tecnología.</p>
+<div class="container">
+    <div class="row">
+        <!-- Sección 1: Enlaces rápidos -->
+        <div class="col-md-4 mb-3">
+            <h6 class="text-uppercase fw-bold">Secciones</h6>
+            <ul class="list-unstyled">
+                <li><a href="{% url 'destacados' %}" class="text-white text-decoration-none">Inicio</a></li>
+                <li><a href="{% url 'categorias' %}" class="text-white text-decoration-none">Categorías</a></li>
+                <li><a href="{% url 'articulos' %}" class="text-white text-decoration-none">Artículos</a></li>
+                <li><a href="{% url 'acerca_de' %}" class="text-white text-decoration-none">Acerca de</a></li>
+            </ul>
+        </div>
+
+        <!-- Sección 2: Información de contacto -->
+        <div class="col-md-4 mb-3">
+            <h6 class="text-uppercase fw-bold">Contacto</h6>
+            <p class="mb-1"><i class="bi bi-envelope-fill"></i> contacto@miblog.com</p>
+            <p class="mb-1"><i class="bi bi-telephone-fill"></i> +34 600 123 456</p>
+            <p><i class="bi bi-geo-alt-fill"></i> Madrid, España</p>
+        </div>
+
+        <!-- Sección 3: Redes sociales -->
+        <div class="col-md-4 mb-3">
+            <h6 class="text-uppercase fw-bold">Síguenos</h6>
+            <a href="#" class="text-white me-2"><i class="bi bi-facebook fs-5"></i></a>
+            <a href="#" class="text-white me-2"><i class="bi bi-twitter-x fs-5"></i></a>
+            <a href="#" class="text-white me-2"><i class="bi bi-instagram fs-5"></i></a>
+            <a href="#" class="text-white"><i class="bi bi-youtube fs-5"></i></a>
+        </div>
     </div>
 
-    <!-- Enlaces útiles -->
-    <div style="flex: 1 1 200px; text-align: right;">
-      <a href="{% url 'destacados' %}" style="margin-right: 15px; text-decoration: none; color: #007bff;">Inicio</a>
-      <a href="{% url 'acerca_de' %}" style="margin-right: 15px; text-decoration: none; color: #007bff;">Acerca de</a>
-      <a href="{% url 'contacto' %}" style="text-decoration: none; color: #007bff;">Contacto</a>
+    <hr class="border-light">
+
+    <div class="text-center small">
+        &copy; {{ year|default:"2025" }} Mi Blog. Hecho con ❤️ usando Django y Bootstrap.
     </div>
-
-  </div>
-
-  <div style="text-align: center; margin-top: 1.5rem; color: #6c757d;">
-    <small>&copy; {{ now|date:"Y" }} Mi Blog. Todos los derechos reservados.</small>
-  </div>
-</footer>
+</div>

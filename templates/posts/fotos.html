@@ -1,20 +1,36 @@
 {% if articulo.fotos.all %}
-    <h3>Fotos</h3>
-    <ul>
-        {% for foto in articulo.fotos.all %}
-            <li>
-                <img src="{{ foto.imagen.url }}" alt="{{ foto.descripcion }}" width="200">
-                <p>{{ foto.descripcion }}</p>
+    <div class="mt-5">
+        <h3 class="mb-4">📸 Galería de Fotos</h3>
+        <div class="row g-4">
+            {% for foto in articulo.fotos.all %}
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <div class="card h-100 shadow-sm">
+                        <img src="{{ foto.imagen.url }}" class="card-img-top img-fluid" alt="{{ foto.descripcion }}">
+                        <div class="card-body">
+                            <p class="card-text small">{{ foto.descripcion }}</p>
 
-                {% if user.is_staff %}
-                    <a href="{% url 'editar_foto' foto.pk %}">Editar</a> |
-                    <a href="{% url 'eliminar_foto' foto.pk %}">Eliminar</a>
-                {% endif %}
-            </li>
-        {% endfor %}
-    </ul>
+                            {% if user.is_staff %}
+                                <div class="d-flex justify-content-between">
+                                    <a href="{% url 'editar_foto' foto.pk %}" class="btn btn-sm btn-outline-secondary">
+                                        <i class="bi bi-pencil-square"></i> Editar
+                                    </a>
+                                    <a href="{% url 'eliminar_foto' foto.pk %}" class="btn btn-sm btn-outline-danger">
+                                        <i class="bi bi-trash"></i> Eliminar
+                                    </a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 {% endif %}
 
 {% if user.is_staff %}
-    <a href="{% url 'subir_foto' articulo.pk %}">Subir nueva foto</a>
+    <div class="mt-4">
+        <a href="{% url 'subir_foto' articulo.pk %}" class="btn btn-outline-primary btn-sm">
+            <i class="bi bi-upload"></i> Subir nueva foto
+        </a>
+    </div>
 {% endif %}

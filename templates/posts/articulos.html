@@ -3,22 +3,51 @@
 {% block title %}Lista de artículos en Mi Blog{% endblock %}
 
 {% block content %}
-    <ul>
-        {% for articulo in articulos %}
-            <li>
-                <a href="{% url 'articulo' articulo.pk %}" style="text-decoration: none; color: inherit; display: block;">
-                    <h2>{{ articulo.titulo }}</h2>
-                    <p><strong>Publicado:</strong> {{ articulo.fecha_publicacion }}</p>
-                    <p><strong>Autor:</strong> {{ articulo.autor.username }}</p>
-                    <p><strong>Categoría:</strong> {{ articulo.categoria.nombre_categoria }}</p>
-                    <div>
-                        {{ articulo.contenido|truncatewords:30 }}
-                    </div>
+<div class="row">
+    {% for articulo in articulos %}
+        <div class="col-md-12 mb-4">
+            <div class="card shadow-sm h-100 border-0">
+                <div class="card-body">
+                    <!-- Título del artículo -->
+                    <h2 class="card-title">
+                        <a href="{% url 'articulo' articulo.pk %}" class="text-decoration-none text-dark">
+                            {{ articulo.titulo }}
+                        </a>
+                    </h2>
 
+                    <!-- Metadatos del artículo -->
+                    <p class="mb-1 text-muted">
+                        <i class="bi bi-calendar-event-fill"></i>
+                        {{ articulo.fecha_publicacion|date:"d M Y" }}
+                        &nbsp; | &nbsp;
+                        <i class="bi bi-person-fill"></i>
+                        {{ articulo.autor.username }}
+                        &nbsp; | &nbsp;
+                        <i class="bi bi-folder-fill"></i>
+                        {{ articulo.categoria.nombre_categoria }}
+                    </p>
+
+                    <!-- Contenido resumido -->
+                    <p class="card-text mt-3">
+                        {{ articulo.contenido|truncatewords:30 }}
+                    </p>
+
+                    <!-- Imagen u otro contenido relacionado -->
                     {% include 'posts/fotos.html' %}
 
-                </a>
-            </li>
-        {% endfor %}
-    </ul>
+                    <!-- Botón "Leer más" -->
+                    <div class="mt-3">
+                        <a href="{% url 'articulo' articulo.pk %}" class="btn btn-outline-primary btn-sm">
+                            Leer más <i class="bi bi-arrow-right-short"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <div class="col-12">
+            <p class="text-muted">No hay artículos disponibles por el momento.</p>
+        </div>
+    {% endfor %}
+</div>
 {% endblock %}

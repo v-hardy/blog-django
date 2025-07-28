@@ -1,30 +1,60 @@
-{% block content %}
-  <h2>Comentarios</h2>
-    {% for comentario in comentarios %}
-        <p>
-            <strong>{{ comentario.usuario.username }}</strong>: {{ comentario.contenido }}
-            {% if user == comentario.usuario or user.is_staff or user.is_superuser %}
-                <!-- Botón Editar -->
-                <a href="{% url 'editar_comentario' comentario.pk %}">Editar</a>
+{% load widget_tweaks %}
 
-                <!-- Botón Eliminar (con confirmación) -->
-                <form action="{% url 'eliminar_comentario' comentario.pk %}" method="post" style="display:inline;">
-                    {% csrf_token %}
-                    <button type="submit" onclick="return confirm('¿Estás seguro de que deseas eliminar este comentario?');">Eliminar</button>
-                </form>
-            {% endif %}
-        </p>
+{% block content %}
+<div class="mt-5">
+    <h3 class="mb-4">🗨️ Comentarios</h3>
+
+    {% for comentario in comentarios %}
+        <div class="border rounded p-3 mb-3 bg-light">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <strong>{{ comentario.usuario.username }}</strong>
+                    <span class="text-muted small ms-2">
+                        {{ comentario.fecha_creacion|date:"d M Y H:i" }}
+                    </span>
+                </div>
+                {% if user == comentario.usuario or user.is_staff or user.is_superuser %}
+                    <div>
+                        <a href="{% url 'editar_comentario' comentario.pk %}" class="btn btn-sm btn-outline-secondary me-1">
+                            <i class="bi bi-pencil-fill"></i> Editar
+                        </a>
+                        <form action="{% url 'eliminar_comentario' comentario.pk %}" method="post" class="d-inline">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-sm btn-outline-danger"
+                                    onclick="return confirm('¿Estás seguro de que deseas eliminar este comentario?');">
+                                <i class="bi bi-trash-fill"></i> Eliminar
+                            </button>
+                        </form>
+                    </div>
+                {% endif %}
+            </div>
+
+            <p class="mt-2 mb-0">{{ comentario.contenido }}</p>
+        </div>
     {% empty %}
-        <p>No hay comentarios aún.</p>
+        <p class="text-muted">No hay comentarios aún.</p>
     {% endfor %}
 
     {% if user.is_authenticated %}
-        <form action="{% url 'crear_comentario' articulo.pk %}" method="post">
-            {% csrf_token %}
-            {{ comentario_form.as_p }}
-            <button type="submit">Comentar</button>
-        </form>
+        <div class="card mt-4">
+            <div class="card-body">
+                <h5 class="card-title">Añadir un comentario</h5>
+                <form action="{% url 'crear_comentario' articulo.pk %}" method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        {{ comentario_form.contenido.label_tag }}
+                        {{ comentario_form.contenido|add_class:"form-control" }}
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-sm">
+                        <i class="bi bi-send"></i> Comentar
+                    </button>
+                </form>
+            </div>
+        </div>
     {% else %}
-        <p><a href="{% url 'login' %}">Inicia sesión</a> para comentar.</p>
+        <p class="mt-4">
+            <a href="{% url 'login' %}">Inicia sesión</a> para comentar.
+        </p>
     {% endif %}
+</div>
 {% endblock %}
