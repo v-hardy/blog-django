@@ -1,9 +1,38 @@
 {% extends 'base.html' %}
 
-{% block title %}Acerca de Mi Blog{% endblock %}
+{% block hero_title %}Acerca de{% endblock %}
+{% block hero_description %}Conoce más sobre nuestro blog, nuestra misión y cómo te ofrecemos contenido relevante y de calidad.{% endblock %}
 
 {% block content %}
-<div class="container mt-4">
+<style>
+  .about-container {
+    background: #f9f9f9;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+  .about-container h1 {
+    color: #343a40;
+    font-weight: 700;
+    margin-bottom: 25px;
+    border-bottom: 3px solid #007bff;
+    padding-bottom: 8px;
+  }
+  .about-container h3 {
+    color: #007bff;
+    margin-top: 30px;
+  }
+  .about-container p {
+    color: #555;
+    font-size: 1.1rem;
+    line-height: 1.6;
+  }
+  .about-container strong {
+    color: #0056b3;
+  }
+</style>
+
+<div class="container about-container mt-5">
     <h1>Acerca de</h1>
     <p>Bienvenido a <strong>Mi Blog</strong>, un espacio donde compartimos artículos sobre tecnología, desarrollo, y temas de interés general.</p>
 
@@ -12,6 +41,5 @@
 
     <h3>Nuestra misión</h3>
     <p>Brindar contenido actualizado, relevante y accesible para todos los niveles de experiencia, desde principiantes hasta desarrolladores avanzados.</p>
-
 </div>
 {% endblock %}

@@ -1,12 +1,44 @@
 {% extends "base.html" %}
 
-{% block title %}{{ view.object.pk|yesno:"Editar Artículo,Nuevo Artículo" }} en Mi Blog{% endblock %}
+{% load widget_tweaks %}
+
+{% block hero_title %}{{ view.object.pk|yesno:"Editar Artículo,Nuevo Artículo" }} en Mi Blog{% endblock %}
 
 {% block content %}
-  <h1>{{ view.object.pk|yesno:"Editar Artículo,Nuevo Artículo" }}</h1>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Guardar</button>
-  </form>
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="card shadow-lg border-0 rounded-4">
+          <div class="card-body">
+            <h1 class="text-center mb-4 text-primary">
+              {{ view.object.pk|yesno:"Editar Artículo,Nuevo Artículo" }}
+            </h1>
+
+            <form method="post" novalidate>
+              {% csrf_token %}
+              
+              {% for field in form %}
+                <div class="mb-4">
+                  <label for="{{ field.id_for_label }}" class="form-label fs-5 text-secondary">{{ field.label }}</label>
+                  <div class="input-group">
+                    {{ field }}
+                  </div>
+                  {% if field.errors %}
+                    <div class="text-danger mt-2 small">
+                      {{ field.errors }}
+                    </div>
+                  {% endif %}
+                </div>
+              {% endfor %}
+
+              <div class="d-grid">
+                <button type="submit" class="btn btn-primary btn-lg shadow-sm">Guardar</button>
+              </div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}

@@ -1,6 +1,14 @@
-<h2>Eliminar Comentario</h2>
-<p>¿Seguro que deseas eliminar este comentario?</p>
-<form method="post">
-  {% csrf_token %}
-  <button type="submit">Eliminar</button>
-</form>
+  <!-- esto no se esta usando ahora -->
+
+<div class="card shadow p-4 text-center" style="max-width: 400px;">
+    <h2 class="text-danger mb-3">Eliminar Comentario</h2>
+    <p class="mb-4">¿Seguro que deseas eliminar este comentario?</p>
+    
+    <form method="post">
+      {% csrf_token %}
+      <div class="d-flex justify-content-center gap-3">
+        <button type="submit" class="btn btn-danger">Eliminar</button>
+        <a href="{% url 'nombre_de_la_vista_anterior' %}" class="btn btn-secondary">Cancelar</a>
+      </div>
+    </form>
+  </div>

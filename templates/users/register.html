@@ -1,12 +1,49 @@
 {% extends "base.html" %}
 
-{% block content %}
-    <h2>Registro de usuario</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Registrarse</button>
-    </form>
-    <p>¿Ya tenés cuenta? <a href="{% url 'login' %}">Iniciar sesión</a></p>
-{% endblock %}
+{% load widget_tweaks %}
 
+{% block hero_title %}Crear una cuenta{% endblock %}
+{% block hero_description %}Únete a nuestra comunidad. Regístrate para acceder a contenido exclusivo y mucho más. Completa el formulario a continuación para comenzar.{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-4">
+            <form method="post" class="border p-4 rounded shadow-sm">
+                {% csrf_token %}
+                
+                <!-- Campo de nombre de usuario -->
+                <div class="mb-3">
+                    <label for="{{ form.username.id_for_label }}" class="form-label">Nombre de usuario</label>
+                    {{ form.username|attr:"class=form-control" }}
+                </div>
+
+                <!-- Campo de correo electrónico -->
+                <div class="mb-3">
+                    <label for="{{ form.email.id_for_label }}" class="form-label">Correo electrónico</label>
+                    {{ form.email|attr:"class=form-control" }}
+                </div>
+
+                <!-- Campo de contraseña -->
+                <div class="mb-3">
+                    <label for="{{ form.password1.id_for_label }}" class="form-label">Contraseña</label>
+                    {{ form.password1|attr:"class=form-control" }}
+                </div>
+
+                <!-- Campo de confirmación de contraseña -->
+                <div class="mb-3">
+                    <label for="{{ form.password2.id_for_label }}" class="form-label">Confirmar contraseña</label>
+                    {{ form.password2|attr:"class=form-control" }}
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center">
+                    <button type="submit" class="btn btn-primary">Registrarse</button>
+                </div>
+            </form>
+
+            <p class="text-center mt-3">¿Ya tienes cuenta? <a href="{% url 'login' %}">Iniciar sesión</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}

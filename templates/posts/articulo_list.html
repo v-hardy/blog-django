@@ -1,9 +1,0 @@
-<h1>Artículos</h1>
-<a href="{% url 'posts:crear' %}">Nuevo Artículo</a>
-<ul>
-  {% for articulo in articulos %}
-    <li>
-      <a href="{% url 'posts:detalle' articulo.pk %}">{{ articulo.titulo }}</a>
-    </li>
-  {% endfor %}
-</ul>

@@ -1,23 +1,32 @@
 {% extends 'base.html' %}
 
-{% block content %}
-<div class="container mt-4">
-    <h2>Artículos en "{{ categoria.nombre_categoria }}"</h2>
+{% block hero_title %}Categoría: {{ categoria.nombre_categoria }}{% endblock %}
+{% block hero_description %}Explora los artículos más recientes y relevantes sobre {{ categoria.nombre_categoria }}.{% endblock %}
 
+{% block content %}
+<div class="container mt-5">
     {% if articulos %}
-        <ul class="list-group mt-3">
+        <ul class="list-group">
             {% for articulo in articulos %}
-                <li class="list-group-item">
-                    <a href="{% url 'articulo' articulo.id %}">
-                        {{ articulo.titulo }}
-                    </a>
-                    <br>
-                    <small class="text-muted">Publicado el {{ articulo.fecha_publicacion|date:"d M Y" }}</small>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <h5 class="mb-1">
+                            <a href="{% url 'articulo' articulo.id %}" class="text-decoration-none text-dark">
+                                {{ articulo.titulo }}
+                            </a>
+                        </h5>
+                        <p class="mb-1 text-muted">
+                            Publicado el {{ articulo.fecha_publicacion|date:"d M Y" }}
+                        </p>
+                    </div>
+                    <a href="{% url 'articulo' articulo.id %}" class="btn btn-primary btn-sm">Leer más</a>
                 </li>
             {% endfor %}
         </ul>
     {% else %}
-        <p>No hay artículos en esta categoría todavía.</p>
+        <div class="alert alert-warning text-center" role="alert">
+            No hay artículos en esta categoría todavía.
+        </div>
     {% endif %}
 </div>
 {% endblock %}

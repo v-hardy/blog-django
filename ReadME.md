@@ -49,15 +49,28 @@ Incluye todos los permisos anteriores, más:
 - **Categorías**  
   Organización temática del contenido del blog.
 
+- **Articulos**  
+  Muestra publicaciones recientes
+
+- **Buscador**  
+  Busca entre publicaciones segun filtros.
+
 - **Acerca de**  
   Presentación del blog, sus autores y propósito.
 
 - **Contacto**  
   Información de contacto, incluyendo:
-  - Formulario (opcional).
+  - Formulario.
   - Dirección de correo.
   - Enlaces a redes sociales.
 
+- **Publicar**  
+  Crear nuevos artículos (acceso restringido a usuarios autorizados).
+
+- **Iniciar/Cerrar sesion**  
+  
+- **Registrar**  
+  
 
 ---
 

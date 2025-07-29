@@ -4,12 +4,17 @@
 
 {% block content %}
 
-<h1>Eliminar Artículo</h1>
-<p>¿Estás seguro de que deseas eliminar "{{ object.titulo }}"?</p>
-<form method="post">
-  {% csrf_token %}
-  <button type="submit">Sí, eliminar</button>
-</form>
-<a href="{% url 'articulo' object.pk %}">Cancelar</a>
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+  <div class="card shadow p-4 text-center" style="max-width: 500px; width: 100%;">
+    <h1 class="text-danger mb-3">Eliminar Artículo</h1>
+    <p class="mb-4">¿Estás seguro de que deseas eliminar <strong>"{{ object.titulo }}"</strong>?</p>
+    
+    <form method="post" class="d-flex justify-content-center gap-3">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-danger">Sí, eliminar</button>
+      <a href="{% url 'articulo' object.pk %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+  </div>
+</div>
 
 {% endblock %}

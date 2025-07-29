@@ -1,35 +1,44 @@
 {% extends "base.html" %}
 
-{% block title %}Buscando en Mi Blog{% endblock %}
+{% load widget_tweaks %}
+
+{% block hero_title %}Buscar en el blog{% endblock %}
+{% block hero_description %}Encuentra rápidamente los artículos, categorías y contenido que te interesan utilizando nuestro buscador.{% endblock %}
 
 {% block content %}
-    <h2>Buscar artículos</h2>
+    <div class="container mt-5">
+        
+        <form method="get" class="p-4 border rounded shadow-sm">
+            <div class="mb-3">
+                <label for="id_categoria" class="form-label">Categoría:</label>
+                {{ form.categoria|add_class:"form-select" }}
+            </div>
 
-        <form method="get">
-            <label for="id_categoria">Categoría:</label>
-            {{ form.categoria }}
+            <div class="mb-3">
+                <label for="id_orden_fecha" class="form-label">Antigüedad:</label>
+                {{ form.orden_fecha|add_class:"form-select" }}
+            </div>
 
-            <label for="id_orden_fecha">Antigüedad:</label>
-            {{ form.orden_fecha }}
+            <div class="mb-3">
+                <label for="id_orden_alfabetico" class="form-label">Orden alfabético:</label>
+                {{ form.orden_alfabetico|add_class:"form-select" }}
+            </div>
 
-            <label for="id_orden_alfabetico">Orden alfabético:</label>
-            {{ form.orden_alfabetico }}
-
-            <button type="submit">Buscar</button>
+            <button type="submit" class="btn btn-primary">Buscar</button>
         </form>
 
-    <h3>Resultados:</h3>
-    <ul>
-        {% for articulo in articulos %}
-            <li>
-                <a href="{% url 'articulo' articulo.pk %}" style="text-decoration: none; color: inherit; display: block;">
-                <strong>{{ articulo.titulo }}</strong> |
-                Categoría: {{ articulo.categoria }} |
-                Publicado el {{ articulo.fecha_publicacion|date:"d/m/Y H:i" }}
-                </a>
-            </li>
-        {% empty %}
-            <li>No se encontraron artículos.</li>
-        {% endfor %}
-    </ul>
+        <h3 class="mt-5">Resultados:</h3>
+        <ul class="list-group">
+            {% for articulo in articulos %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <a href="{% url 'articulo' articulo.pk %}" class="text-decoration-none text-dark">
+                        <strong>{{ articulo.titulo }}</strong>
+                    </a>
+                    <span class="text-muted">Publicado el {{ articulo.fecha_publicacion|date:"d/m/Y H:i" }}</span>
+                </li>
+            {% empty %}
+                <li class="list-group-item text-center">No se encontraron artículos.</li>
+            {% endfor %}
+        </ul>
+    </div>
 {% endblock %}

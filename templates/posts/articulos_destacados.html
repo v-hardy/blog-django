@@ -1,30 +1,40 @@
 {% extends "base.html" %}
 
-{% block title %}Destacados en Mi Blog{% endblock %}
+{% block hero_title %}Destacados en Mi Blog{% endblock %}
 
 {% block content %}
-    <h1>Artículos Destacados</h1>
-    <ul>
-    {% for articulo in articulos %}
-        <li>
-            <a href="{% url 'articulo' articulo.pk %}" style="text-decoration: none; color: inherit; display: block;">
-                <h2>{{ articulo.titulo }}</h2>
-                <p><strong>Publicado:</strong> {{ articulo.fecha_publicacion }}</p>
-                <p><strong>Autor:</strong> {{ articulo.autor.username }}</p>
-                <p><strong>Categoría:</strong> {{ articulo.categoria.nombre_categoria }}</p>
-                <div>
-                    {{ articulo.contenido|truncatewords:30 }}
-                </div>
-                {% if articulo.fotos.all %}
-                    <div>
-                    <strong>Fotos:</strong>
-                    {% for foto in articulo.fotos.all %}
-                        <img src="{{ foto.url_foto }}" alt="{{ foto.descripcion }}" width="200">
-                    {% endfor %}
+    <div class="container mt-5">
+        <div class="row">
+        {% for articulo in articulos %}
+            <div class="col-12 mb-4">
+                <div class="row g-4 align-items-center">
+                    <!-- Imagen destacada del artículo (si existe) -->
+                    <div class="col-md-4">
+                        {% if articulo.fotos.all %}
+                            <img src="{{ articulo.fotos.first.url_foto }}" alt="{{ articulo.fotos.first.descripcion }}" class="img-fluid rounded">
+                        {% endif %}
                     </div>
-                {% endif %}
-            </a>
-        </li>
-    {% endfor %}
-    </ul>
+                    
+                    <!-- Detalles del artículo -->
+                    <div class="col-md-8">
+                        <h5 class="mb-2">
+                            <a href="{% url 'articulo' articulo.pk %}" class="text-decoration-none text-dark">
+                                {{ articulo.titulo }}
+                            </a>
+                        </h5>
+                        <p class="text-muted mb-2">
+                            <strong>Publicado:</strong> {{ articulo.fecha_publicacion|date:"d M Y" }}<br>
+                            <strong>Autor:</strong> {{ articulo.autor.username }}<br>
+                            <strong>Categoría:</strong> {{ articulo.categoria.nombre_categoria }}
+                        </p>
+                        <p class="mb-3">
+                            {{ articulo.contenido|truncatewords:30 }}
+                        </p>
+                        <a href="{% url 'articulo' articulo.pk %}" class="btn btn-primary">Leer más</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
 {% endblock %}
