@@ -28,7 +28,7 @@ urlpatterns = [
     path('users/', include('users.urls')),
     path('contact/', include('contact.urls'), name="contacto"),  # mejora modular
     path('about/', include('about.urls'), name="acerca_de"),      # mejora modular
-]
+] 
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

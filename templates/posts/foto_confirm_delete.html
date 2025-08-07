@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container mt-5">
+    <h2 class="mb-4">¿Estás seguro de que deseas eliminar esta foto?</h2>
+
+    <div class="card mb-3" style="max-width: 500px;">
+      {% if object.imagen %}
+        <img src="{{ object.imagen.url }}" class="card-img-top" alt="Foto de {{ object.articulo.titulo }}">
+      {% endif %}
+      <div class="card-body">
+        <p class="card-text"><strong>Descripción:</strong> {{ object.descripcion }}</p>
+        <p class="card-text"><strong>Artículo:</strong> {{ object.articulo.titulo }}</p>
+      </div>
+    </div>
+
+    <form method="post">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-danger">🗑️ Confirmar eliminación</button>
+      <a href="{% url 'articulo' object.articulo.pk %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+  </div>
+{% endblock %}

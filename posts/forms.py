@@ -1,10 +1,23 @@
 from django import forms
 from .models import Categoria, Articulo, Foto
 
+# forms.py
+from django import forms
+from .models import Foto
+
 class FotoForm(forms.ModelForm):
     class Meta:
         model = Foto
         fields = ['imagen', 'descripcion']
+
+    def clean_imagen(self):
+        imagen = self.cleaned_data.get('imagen')
+
+        if not self.instance.pk and not imagen:
+            # Si es una nueva instancia y no hay imagen, lanzamos error
+            raise forms.ValidationError("Debes subir una imagen.")
+
+        return imagen
 
 
 class ArticuloForm(forms.ModelForm):

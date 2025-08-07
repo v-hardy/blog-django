@@ -31,6 +31,13 @@ class EditarFoto(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     form_class = FotoForm
     template_name = 'posts/foto_form.html'
 
+    def form_valid(self, form):
+        # Si se intenta guardar sin imagen, elimina la instancia
+        if not form.cleaned_data.get('imagen'):
+            self.object.delete()
+            return redirect(self.get_success_url())
+        return super().form_valid(form)
+
     def get_success_url(self):
         return reverse_lazy('articulo', kwargs={'pk': self.object.articulo.pk})
 

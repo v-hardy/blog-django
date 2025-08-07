@@ -110,11 +110,13 @@ git clone git@github.com:v-hardy/blog-django.git
 cd blog-django
 ```
 
-### 2. Crea y activa un entorno virtual
+### 2. Crea y activa un entorno virtual. Y genera la secretkey.
 
 ```
 python -m venv venv
 source venv/bin/activate  # En Windows: venv\Scripts\activate
+
+python generate_secret_key.py
 ```
 
 ### 3. Instala dependencias
@@ -122,6 +124,7 @@ source venv/bin/activate  # En Windows: venv\Scripts\activate
 ```
 pip install -r requirements.txt
 ```
+
 
 ### 4. Aplica migraciones
 

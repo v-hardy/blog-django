@@ -17,6 +17,14 @@
     <div class="col-12 col-md-10 col-lg-6">
       <div class="card shadow-sm">
         <div class="card-body">
+
+          {% if form.instance.pk and form.instance.imagen %}
+            <div class="text-center mb-4">
+              <p>Imagen actual:</p>
+              <img src="{{ form.instance.imagen.url }}" class="img-fluid" alt="Imagen subida">
+            </div>
+          {% endif %}
+
           <h2 class="text-center mb-4">
 
           </h2>

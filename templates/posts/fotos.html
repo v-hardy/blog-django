@@ -5,7 +5,14 @@
             {% for foto in articulo.fotos.all %}
                 <div class="col-sm-6 col-md-4 col-lg-3">
                     <div class="card h-100 shadow-sm">
-                        <img src="{{ foto.imagen.url }}" class="card-img-top img-fluid" alt="{{ foto.descripcion }}">
+                        {% if foto.imagen %}
+                            <img src="{{ foto.imagen.url }}" class="card-img-top img-fluid" alt="{{ foto.descripcion }}">
+                        {% else %}
+                            <div class="card-img-top bg-light text-center py-5 text-muted">
+                                <i class="bi bi-image" style="font-size: 2rem;"></i><br>
+                                Sin imagen
+                            </div>
+                        {% endif %}
                         <div class="card-body">
                             <p class="card-text small">{{ foto.descripcion }}</p>
 
