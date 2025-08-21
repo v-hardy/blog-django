@@ -1,0 +1,23 @@
+{% for task in column.tasks.all %}
+    <div class="card mb-2">
+        <div class="card-body p-2">
+            <span>{{ task.title }}</span>
+            <div class="mt-2">
+                <div class="btn-group btn-group-sm" role="group">
+                    {% for col in all_columns %}
+                        {% if col.id != column.id %}
+                        <button class="btn btn-outline-secondary"
+                                hx-post="{% url 'move_task' task.id col.id %}" 
+                                hx-target="#column-{{ col.id }}" 
+                                hx-swap="innerHTML">
+                            ➡️ {{ col.name }}
+                        </button>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% empty %}
+    <p class="text-muted"><em>No hay tareas</em></p>
+{% endfor %}

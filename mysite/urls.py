@@ -20,6 +20,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('posts.urls')), #como es un blog el inicio es los posts pero habria que poner los recientes o destacados
@@ -28,6 +29,8 @@ urlpatterns = [
     path('users/', include('users.urls')),
     path('contact/', include('contact.urls'), name="contacto"),  # mejora modular
     path('about/', include('about.urls'), name="acerca_de"),      # mejora modular
+
+    path("tasks/", include("tasks.urls")),
 ] 
 
 if settings.DEBUG:

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block hero_title %}📋 Tablero de Tareas{% endblock %}
+{% block hero_description %}Visualizá los estados de las tareas.{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <h1 class="text-center mb-4"></h1>
+
+    <div class="row g-4">
+        {% for column in columns %}
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">{{ column.name }}</h5>
+                </div>
+                <div class="card-body" id="column-{{ column.id }}">
+                    {% include "tasks/task_list.html" with column=column %}
+                </div>
+                <div class="card-footer">
+                    <form class="d-flex gap-2" 
+                          hx-post="{% url 'add_task' column.id %}" 
+                          hx-target="#column-{{ column.id }}" 
+                          hx-swap="innerHTML">
+                        <input type="text" class="form-control form-control-sm" 
+                               name="title" placeholder="Nueva tarea">
+                        <button type="submit" class="btn btn-success btn-sm">➕</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
